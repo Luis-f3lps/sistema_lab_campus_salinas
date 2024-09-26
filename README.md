@@ -2,11 +2,11 @@
 # Sistema de Inventário de Produtos Químicos Fiscalizados pela PF para o IFNMG Salinas
 
 <p align="center">
-    <img src="https://qualitapps.com/wp-content/uploads/2023/02/102.png" width="200" height="200"/>
-    <img src="https://kinsta.com/wp-content/uploads/2022/05/MariaDB_logo-1024x290.png" width="200" height="200"/>
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/HTML5_logo_and_wordmark.svg/640px-HTML5_logo_and_wordmark.svg.png" width="200" height="200"/>
-    <img src="https://delta-dev-software.fr/wp-content/uploads/2024/05/CSS-Logo.png" width="200" height="200"/>
-    <img src="https://tipscode.com.br/uploads/2020/01/js.png" width="200" height="200"/>
+    <img src="https://qualitapps.com/wp-content/uploads/2023/02/102.png" width="200" height="100"/>
+    <img src="https://kinsta.com/wp-content/uploads/2022/05/MariaDB_logo-1024x290.png" width="200" height="100"/>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/HTML5_logo_and_wordmark.svg/640px-HTML5_logo_and_wordmark.svg.png" width="200" height="100"/>
+    <img src="https://delta-dev-software.fr/wp-content/uploads/2024/05/CSS-Logo.png" width="200" height="100"/>
+    <img src="https://tipscode.com.br/uploads/2020/01/js.png" width="200" height="100"/>
 </p>
 
 
