@@ -17,10 +17,12 @@
     "body-parser": "^1.20.2",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
-    "express": "^4.19.2",
+    "express": "^4.21.0",
     "express-session": "^1.18.0",
+    "fs": "^0.0.1-security",
     "mysql": "^2.18.1",
     "mysql2": "^3.11.0",
+    "path": "^0.12.7",
     "pdfkit": "^0.15.0"
   },
   "devDependencies": {
