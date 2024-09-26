@@ -3,7 +3,6 @@
 
 <p align="center">
     <img src="https://qualitapps.com/wp-content/uploads/2023/02/102.png" width="150" height="100"/>
-    <img src="https://tipscode.com.br/uploads/2020/01/js.png" width="80" height="70"/>
 </p>
 
 
