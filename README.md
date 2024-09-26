@@ -32,7 +32,8 @@ cd sistema-inventario
 Instale as dependências do projeto com o npm:
 
 ```bash
-npm install
+npm install express path dotenv pdfkit fs express-session bcrypt
+
 ```
 
 ### Configurar o Banco de Dados MySQL
