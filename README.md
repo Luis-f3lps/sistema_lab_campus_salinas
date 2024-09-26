@@ -1,8 +1,7 @@
 
 # Sistema de Inventário de Produtos Químicos Fiscalizados pela PF para o IFNMG Salinas
 
-<p align="center">
-  <img src="https://samory.sistemasresponsivos.com.br/wp-content/uploads/2022/04/1200px-Node.js_logo.svg_.png"/>
+<p align="center" font-size="100px">
     <img src="https://qualitapps.com/wp-content/uploads/2023/02/102.png"/>
   <img src="https://kinsta.com/wp-content/uploads/2022/05/MariaDB_logo-1024x290.png"/>
   <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/HTML5_logo_and_wordmark.svg/640px-HTML5_logo_and_wordmark.svg.png"/>
