@@ -1,39 +1,115 @@
-# Sistema de Inventário de produtos quimicos fiscalizados pela PF para o IFNMG Salinas
 
-Este é um sistema de inventário que permite gerenciar e registrar consumos de produtos. O sistema inclui uma interface web e funcionalidades para gerar relatórios em PDF.
+# Sistema de Inventário de Produtos Químicos Fiscalizados pela PF para o IFNMG Salinas
+
+<p align="center">
+  <img src="https://samory.sistemasresponsivos.com.br/wp-content/uploads/2022/04/1200px-Node.js_logo.svg_.png"/>
+    <img src="https://qualitapps.com/wp-content/uploads/2023/02/102.png"/>
+  <img src="https://kinsta.com/wp-content/uploads/2022/05/MariaDB_logo-1024x290.png"/>
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/HTML5_logo_and_wordmark.svg/640px-HTML5_logo_and_wordmark.svg.png"/>
+  <img src="https://delta-dev-software.fr/wp-content/uploads/2024/05/CSS-Logo.png"/>
+  <img src="https://tipscode.com.br/uploads/2020/01/js.png"/>
+</p>
+
+
+Este é um sistema de inventário que permite gerenciar e registrar consumos de produtos químicos. O sistema inclui uma interface web e funcionalidades para gerar relatórios em PDF.
 
 ## Pré-requisitos
 
 Certifique-se de que você tem as seguintes ferramentas instaladas:
-- [Node.js](https://nodejs.org/) (v14 ou superior)
-- [MySQL](https://www.mysql.com/) (ou MariaDB)
+
+- Node.js (v14 ou superior)
+- MySQL (ou MariaDB)
 
 ## Instalando
 
-1. **Clonar o Repositório**
+### Clonar o Repositório
 
-   Clone o repositório para a sua máquina local:
+Clone o repositório para a sua máquina local:
 
-   ```bash
-   git clone https://github.com/seu-usuario/sistema-inventario.git
-   cd sistema-inventario
-   
-2. **Instalar Dependências**
+```bash
+git clone https://github.com/seu-usuario/sistema-inventario.git
+cd sistema-inventario
+```
+
+### Instalar Dependências
 
 Instale as dependências do projeto com o npm:
-   npm install
 
-3. **Configurar o Banco de Dados MySQL**
+```bash
+npm install
+```
 
-Certifique-se de que o MySQL está rodando em sua máquina local.
+### Configurar o Banco de Dados MySQL
 
-4. **Configuração do .env**
+Certifique-se de que o MySQL está rodando em sua máquina local. Crie um banco de dados para o sistema.
 
-   Crie um arquivo .env na raiz do projeto e adicione as variáveis de ambiente conforme abaixo. Esse arquivo será usado para configurar a conexão com o banco de dados MySQL:
-   ```bash
-   PORT=3001
-   DB_HOST=localhost
-   DB_PORT=3306
-   DB_USER=root
-   DB_PASSWORD=sua_senha
-   DB_NAME=nome_do_banco
+## Configuração
+
+1. **Configurar Variáveis de Ambiente:**
+   Você precisa alterar a linha 11 do arquivo `app.js`, que contém:
+   ```javascript
+   dotenv.config({ path: 'seucaminho/variaveis.env' });
+   ```
+   Substitua `'seucaminho/variaveis.env'` pelo caminho correto onde seu arquivo `variaveis.env` está localizado.
+
+2. **Configurar o Banco de Dados:**
+   Certifique-se de que o MySQL está instalado e em execução. Crie um banco de dados e configure as tabelas conforme necessário.
+
+```plaintext
+PORT=3001
+DB_HOST=localhost
+DB_PORT=3306
+DB_USER=seu_usuario
+DB_PASSWORD=sua_senha
+DB_NAME=seu_banco_de_dados
+SESSION_SECRET=sua_chave_secreta
+```
+## Instruções para Importação de Dump do Banco de Dados
+Salve este conteúdo em um arquivo `.sql` e execute com o MySQL:
+
+```bash
+mysql -u <usuario> -p < banco_dados_si_dump.sql
+```
+
+Substitua `<usuario>` pelo seu nome de usuário. Assim, você terá a estrutura das tabelas e o usuário admin configurado corretamente. Se precisar de mais ajustes, estou à disposição!
+
+## Executando o Sistema
+
+Para iniciar o servidor, execute o seguinte comando:
+
+```bash
+node server.js
+```
+
+O sistema estará acessível em `http://localhost:3001`.
+
+## Funcionalidades do Sistema
+
+### 1. Gerenciamento de Produtos
+- **Adicionar Produtos:** Inclui novos produtos químicos ao inventário, com detalhes como sigla, concentração, densidade, nome completo, tipo de unidade (mililitros ou gramas) e NCM.
+- **Editar Produtos:** Atualiza informações sobre produtos já cadastrados.
+- **Remover Produtos:** Exclui produtos do inventário após confirmação do usuário.
+
+### 2. Registro de Consumo
+- **Registrar Consumo:** Permite o registro detalhado do consumo de produtos, incluindo a seleção do produto, quantidade, laboratório, data do consumo e descrição adicional.
+
+### 3. Geração de Relatórios em PDF
+- **Relatórios Detalhados:** Gera relatórios em PDF com informações sobre o inventário e consumos registrados.
+
+## Sub-abas do Sistema
+
+### 4. Inventário
+- Exibe todos os produtos, mostrando o nome do produto, a quantidade disponível e informações adicionais.
+
+### 5. Adicionar Produto
+- O usuário preenche os campos necessários e clica em "Adicionar Estoque" para concluir o cadastro de novos produtos.
+
+### 6. Excluir Produto
+- O usuário seleciona um produto da lista e confirma a exclusão clicando em "Excluir Estoque".
+
+### 7. Registrar Entrada
+- O usuário registra a entrada de produtos ao selecionar o item, informar a quantidade, a data da entrada e uma descrição, clicando em "Registrar" para finalizar o processo.
+
+## Acesso ao Sistema
+- **Usuários do tipo "normal":** Têm acesso limitado, podendo usar apenas o inventário e as funcionalidades de registro.
+- **Usuários do tipo "admin":** Têm acesso a opções administrativas adicionais para um maior controle do sistema.

@@ -152,19 +152,18 @@ function loadsiglasEntrada() {
 document.addEventListener('DOMContentLoaded', function() {
     loadsiglasEntrada();
 });
-
 // Manipulador de envio do formulário de entrada
 document.getElementById('entrada-form').addEventListener('submit', function(event) {
     event.preventDefault(); // Previne o comportamento padrão de envio do formulário
 
     const idproduto = document.getElementById('produto-entrada-select').value;
-    const quantidade = parseInt(document.getElementById('quantidade-entrada').value);
+    const quantidade = parseInt(document.getElementById('quantidade-entrada').value, 10);
     const dataEntrada = document.getElementById('data-entrada').value;
     const descricao = document.getElementById('descricao-entrada').value;
 
     // Validação dos campos
-    if (!idproduto || !quantidade || !dataEntrada || !descricao) {
-        alert('Todos os campos são obrigatórios.');
+    if (!idproduto || isNaN(quantidade) || quantidade <= 0 || !dataEntrada || !descricao) {
+        alert('Todos os campos são obrigatórios e a quantidade deve ser maior que zero.');
         return;
     }
 
@@ -188,53 +187,55 @@ document.getElementById('entrada-form').addEventListener('submit', function(even
         if (result.message) {
             alert(result.message);
         } else {
-            alert(result.error);
+            alert(result.error || 'Erro ao registrar a entrada.');
         }
     })
     .catch(error => console.error('Erro ao registrar entrada:', error));
 });
 
-document.getElementById('consumo-form').addEventListener('submit', function(event) {
-    event.preventDefault(); // Previne o comportamento padrão de envio do formulário
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('consumo-form').addEventListener('submit', function(event) {
+        event.preventDefault(); // Previne o comportamento padrão de envio do formulário
 
-    const sigla = document.getElementById('sigla-select').value;
-    const quantidade = document.getElementById('quantidade').value;
-    const laboratorio = document.getElementById('laboratorio-select').value;
-    const data_consumo = document.getElementById('data_consumo').value;
-    const descricao = document.getElementById('descricao_comsumo').value;
+        const idproduto = document.getElementById('sigla-select').value;
+        const quantidade = parseInt(document.getElementById('quantidade').value, 10);
+        const laboratorio = document.getElementById('laboratorio-select').value;
+        const data_consumo = document.getElementById('data_consumo').value;
+        const descricao = document.getElementById('descricao_comsumo').value; // Corrigido para usar o ID correto
 
-    // Verifica se todos os campos estão preenchidos
-    if (!sigla || !quantidade || !laboratorio || !data_consumo || !descricao) {
-        alert('Por favor, preencha todos os campos.');
-        return;
-    }
-
-    // Cria o objeto de dados para enviar
-    const consumoData = {
-        data_consumo: data_consumo,
-        id_produto: sigla,
-        id_laboratorio: laboratorio,
-        quantidade: quantidade,
-        descricao: descricao
-    };
-
-    // Enviar os dados corretamente
-    fetch('/api/registrar_consumo', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(consumoData) 
-    })
-    .then(response => response.json())
-    .then(result => {
-        if (result.message) {
-            alert(result.message);
-        } else {
-            alert(result.error);
+        // Verifica se todos os campos estão preenchidos
+        if (!idproduto || isNaN(quantidade) || quantidade <= 0 || !laboratorio || !data_consumo || !descricao) {
+            alert('Por favor, preencha todos os campos e a quantidade deve ser maior que zero.');
+            return;
         }
-    })
-    .catch(error => console.error('Erro ao registrar consumo:', error));
+
+        // Cria o objeto de dados para enviar
+        const consumoData = {
+            data_consumo: data_consumo,
+            id_produto: idproduto,
+            id_laboratorio: laboratorio,
+            quantidade: quantidade,
+            descricao: descricao
+        };
+
+        // Enviar os dados corretamente
+        fetch('/api/registrar_consumo', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(consumoData) 
+        })
+        .then(response => response.json())
+        .then(result => {
+            if (result.message) {
+                alert(result.message);
+            } else {
+                alert(result.error || 'Erro ao registrar consumo.');
+            }
+        })
+        .catch(error => console.error('Erro ao registrar consumo:', error));
+    });
 });
 
 document.addEventListener('DOMContentLoaded', function() {

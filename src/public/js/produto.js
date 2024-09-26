@@ -53,23 +53,34 @@ function opentab(tabname) {
 }
 
 // Função para carregar dados de produtos e preencher a tabela
-function loadProdutos() {
-    fetch('/api/produto')
-        .then(response => response.json())
+function loadProdutos(page = 1, limit = 20) { // Ajustando o limite padrão
+    fetch(`/api/produtosPag?page=${page}&limit=${limit}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
         .then(data => {
             const tbody = document.getElementById('produto-tbody');
-            tbody.innerHTML = ''; // Limpa a tabela
-            
-            data.forEach(entry => {
+            tbody.innerHTML = ''; // Limpar a tabela
+
+            // Verifique se há dados
+            if (!data || !data.data || !Array.isArray(data.data)) {
+                console.error('Dados inválidos recebidos:', data);
+                return;
+            }
+
+            data.data.forEach(produto => {
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
-                    <td>${entry.sigla || 'N/A'}</td>
-                    <td>${entry.nome_produto || 'N/A'}</td>
-                    <td>${entry.concentracao || 'N/A'}</td>
-                    <td>${entry.densidade || 'N/A'}</td>
-                    <td class="numeric">${entry.quantidade || 'N/A'}</td>
-                    <td>${entry.tipo_unidade_produto || 'N/A'}</td>
-                    <td>${entry.ncm || 'N/A'}</td>
+                    <td>${produto.sigla || 'N/A'}</td>
+                    <td>${produto.nome_produto || 'N/A'}</td>
+                    <td>${produto.concentracao || 'N/A'}</td>
+                    <td>${produto.densidade || 'N/A'}</td>
+                    <td class="numeric">${produto.quantidade || 'N/A'}</td>
+                    <td>${produto.tipo_unidade_produto || 'N/A'}</td>
+                    <td>${produto.ncm || 'N/A'}</td>
                 `;
                 tbody.appendChild(tr);
             });
@@ -77,23 +88,40 @@ function loadProdutos() {
         .catch(error => console.error('Erro ao carregar produtos:', error));
 }
 
+
+
+// Chame a função para carregar os usuários
+loadProdutos();
+
+
 // Função para carregar produtos no select
 function loadProdutosSelect() {
     fetch('/api/produto')
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Erro na rede ao buscar produtos: ' + response.statusText);
+            }
+            return response.json();
+        })
         .then(data => {
             const select = document.getElementById('id_produto');
-            select.innerHTML = ''; // Limpa o select antes  
+            select.innerHTML = ''; // Limpa o select antes
+
+            if (!Array.isArray(data)) {
+                console.error('Os dados recebidos não são um array.');
+                return;
+            }
 
             data.forEach(produto => {
                 const option = document.createElement('option');
-                option.value = produto.id_produto;
-                option.textContent = produto.nome_produto;
+                option.value = produto.id_produto; // Certifique-se de que id_produto está disponível
+                option.textContent = produto.nome_produto || 'N/A';
                 select.appendChild(option);
             });
         })
         .catch(error => console.error('Erro ao carregar produtos:', error));
 }
+
 
 // Função para enviar o formulário
 document.getElementById('add-produto-form').addEventListener('submit', function(event) {
@@ -173,23 +201,23 @@ function loadLoggedInUser() {
 }
 loadLoggedInUser();
 
-// carregar siglas
+// Função para carregar siglas no select
 function carregarsiglas() {
-        fetch('/api/siglas') // Endpoint para obter a lista
-            .then(response => response.json())
-            .then(data => {
-                const select = document.getElementById('sigla-select');
-                select.innerHTML = '<option value="">Selecione um produto</option>'; // Limpa  e adiciona a opção padrão
+    fetch('/api/siglas') // Endpoint para obter a lista de siglas
+        .then(response => response.json())
+        .then(data => {
+            const select = document.getElementById('sigla-select');
+            select.innerHTML = '<option value="">Selecione um produto</option>'; // Limpa e adiciona a opção padrão
 
-                data.forEach(sigla => {
-                    const option = document.createElement('option');
-                    option.value = sigla.id_produto; // Define o valor como o id_produto
-                    option.textContent = sigla.sigla;
-                    select.appendChild(option);
-                });
-            })
-            .catch(error => console.error('Erro ao carregar siglas:', error));
-    }
+            data.forEach(sigla => {
+                const option = document.createElement('option');
+                option.value = sigla.id_produto; // Define o valor como o id_produto
+                option.textContent = sigla.sigla; // Define o texto como a sigla
+                select.appendChild(option);
+            });
+        })
+        .catch(error => console.error('Erro ao carregar siglas:', error));
+}
 
 // Função para excluir o produto
 function excluirproduto(idproduto) {

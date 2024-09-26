@@ -1,0 +1,37 @@
+# Node.js modules
+node_modules/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Environment variables
+.env
+
+# Dependency directories
+jspm_packages/
+
+# Build directories
+dist/
+build/
+
+# MariaDB
+mariadb-10.4.11-winx64/
+
+# Ignore package-lock.json (but keep package.json)
+package-lock.json
+
+# Operating System files
+.DS_Store
+Thumbs.db
+
+# IDEs and Editors
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# Misc
+*.swp
+*.swo

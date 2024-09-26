@@ -52,29 +52,41 @@ function opentab(tabname) {
 }
 
 // Função para carregar dados de produtos e preencher a tabela
-function loadProdutos() {
-    fetch('/api/produto')
-        .then(response => response.json())
+function loadProdutos(page = 1, limit = 20) { // Ajustando o limite padrão
+    fetch(`/api/produtosPag?page=${page}&limit=${limit}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
         .then(data => {
             const tbody = document.getElementById('produto-tbody');
-            tbody.innerHTML = ''; // Limpa a tabela antes
-            
-            data.forEach(entry => {
+            tbody.innerHTML = ''; // Limpar a tabela
+
+            // Verifique se há dados
+            if (!data || !data.data || !Array.isArray(data.data)) {
+                console.error('Dados inválidos recebidos:', data);
+                return;
+            }
+
+            data.data.forEach(produto => {
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
-                    <td>${entry.sigla || 'N/A'}</td>
-                    <td>${entry.nome_produto || 'N/A'}</td>
-                    <td>${entry.concentracao || 'N/A'}</td>
-                    <td>${entry.densidade || 'N/A'}</td>
-                    <td class="numeric">${entry.quantidade || 'N/A'}</td>
-                    <td>${entry.tipo_unidade_produto || 'N/A'}</td>
-                    <td>${entry.ncm || 'N/A'}</td>
+                    <td>${produto.sigla || 'N/A'}</td>
+                    <td>${produto.nome_produto || 'N/A'}</td>
+                    <td>${produto.concentracao || 'N/A'}</td>
+                    <td>${produto.densidade || 'N/A'}</td>
+                    <td class="numeric">${produto.quantidade || 'N/A'}</td>
+                    <td>${produto.tipo_unidade_produto || 'N/A'}</td>
+                    <td>${produto.ncm || 'N/A'}</td>
                 `;
                 tbody.appendChild(tr);
             });
         })
         .catch(error => console.error('Erro ao carregar produtos:', error));
 }
+
 
 // Função para carregar produtos no select
 function loadProdutosSelect() {

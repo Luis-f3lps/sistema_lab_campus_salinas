@@ -268,7 +268,6 @@ document.querySelectorAll('.submenu > a').forEach(menu => {
     });
 });
 
-// Atualiza o responsável
 document.getElementById('update-responsavel-form').addEventListener('submit', function(event) {
     event.preventDefault();
 
@@ -281,11 +280,13 @@ document.getElementById('update-responsavel-form').addEventListener('submit', fu
     console.log('ID do Laboratório:', idLaboratorio);
     console.log('Email do Novo Responsável:', emailResponsavel);
 
+    // Verificação dos valores
     if (!idLaboratorio || !emailResponsavel) {
         alert('Por favor, selecione um laboratório e um novo responsável.');
         return;
     }
 
+    // Envio da solicitação para atualizar o responsável
     fetch('/api/atualizar-responsavel', {
         method: 'POST',
         headers: {
@@ -299,12 +300,13 @@ document.getElementById('update-responsavel-form').addEventListener('submit', fu
             alert(data.error);
         } else {
             alert(data.message);
-            loadLaboratorios();
-            loadUsuarios();
+            loadLaboratorios(); // Atualiza a lista de laboratórios
+            loadUsuarios(); // Atualiza a lista de usuários
         }
     })
     .catch(error => console.error('Erro ao atualizar responsável:', error));
 });
+
 
 // Função para carregar usuários no select
 function loadUsuarios2() {
